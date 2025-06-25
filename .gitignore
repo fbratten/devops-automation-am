@@ -1,0 +1,6 @@
+# .gitignore
+.env
+*.key
+config/secrets.yaml
+node_modules/
+__pycache__/
