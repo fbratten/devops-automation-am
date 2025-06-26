@@ -1,0 +1,20 @@
+{
+  "name": "devops-automation-am",
+  "version": "0.1.0",
+  "description": "DevOps automation and CI/CD pipelines for AlgoMingle",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint scripts --ext .js",
+    "validate-workflows": "node scripts/validate-github-actions.js",
+    "setup-android": "node scripts/setup-android-env.js"
+  },
+  "devDependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "js-yaml": "^4.1.0",
+    "eslint": "^8.54.0",
+    "jest": "^29.7.0",
+    "dockerode": "^4.0.0"
+  },
+  "private": true
+}

@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Algorand LocalNet for development
+  algorand-node:
+    image: algorand/algod:latest
+    ports:
+      - "4001:4001"  # algod
+      - "4002:4002"  # kmd
+      - "8980:8980"  # indexer
+    environment:
+      - NETWORK=dev
+      - FAST_CATCHUP=1
+    volumes:
+      - algorand-data:/var/lib/algorand
+    networks:
+      - algomingle-network
+
+  # Redis for message queuing
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - algomingle-network
+
+  # PostgreSQL for indexing and analytics
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: algomingle_dev
+      POSTGRES_USER: algomingle
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-devpassword}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - algomingle-network
+
+volumes:
+  algorand-data:
+  redis-data:
+  postgres-data:
+
+networks:
+  algomingle-network:
+    driver: bridge
